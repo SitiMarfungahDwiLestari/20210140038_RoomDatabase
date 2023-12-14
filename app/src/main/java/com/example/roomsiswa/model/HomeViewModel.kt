@@ -14,6 +14,8 @@ class HomeViewModel(private val repositoriSiswa: RepositoriSiswa): ViewModel(){
     companion object{
         private const val  TIMEOUT_MILLIS = 5_000L
     }
+
+    // Membuat state flow yang berisi data UI untuk layar utama
     val homeUiState:StateFlow<HomeUiState> = repositoriSiswa.getAllSiswaStream()
         .filterNotNull()
         .map{HomeUiState(listSiswa = it.toList())}
@@ -21,6 +23,8 @@ class HomeViewModel(private val repositoriSiswa: RepositoriSiswa): ViewModel(){
             started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
             initialValue = HomeUiState()
         )
+
+    // Mendefinisikan model data untuk UI layar utama
     data class HomeUiState(
         val listSiswa: List<Siswa> = listOf()
     )
